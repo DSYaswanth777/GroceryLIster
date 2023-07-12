@@ -63,10 +63,9 @@ const GroceryTable = () => {
 
   return (
     <div
-      className="text-center container"
-      style={{ display: "flex", justifyContent: "center" }}
+      className="text-center h-100 d-flex align-items-center justify-content-center react-data-table"
     >
-      <div style={{ width: "800px" }}>
+      <div style={{ width:"auto" }}>
         <DataTable
           title="Grocery List"
           columns={columns}

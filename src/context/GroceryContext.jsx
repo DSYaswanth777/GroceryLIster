@@ -4,7 +4,6 @@ export const GroceryContext = createContext();
 
 export const GroceryProvider = ({ children }) => {
   const storedSelectedItems = localStorage.getItem("selectedItems");
-  // const [selectedItems, setSelectedItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState(
     storedSelectedItems ? JSON.parse(storedSelectedItems) : []
   );
@@ -12,6 +11,7 @@ export const GroceryProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
   }, [selectedItems]);
+
   const handleSelectionChange = (rows) => {
     setSelectedItems(rows.selectedRows);
   };

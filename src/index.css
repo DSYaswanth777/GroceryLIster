@@ -67,3 +67,12 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+.react-data-table{
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  
+  margin: auto;
+}
