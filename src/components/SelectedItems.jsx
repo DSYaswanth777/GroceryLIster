@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Document,
   Page,
@@ -11,7 +11,7 @@ import {
 
 // Import the Telugu font
 import TeluguFont from "../assets/dhurjati.ttf";
-import { useSelector } from "react-redux";
+import { GroceryContext } from "../context/GroceryContext";
 
 // Register the Telugu font
 Font.register({ family: "TeluguFont", src: TeluguFont });
@@ -48,14 +48,16 @@ const styles = StyleSheet.create({
 });
 
 const SelectedItems = () => {
-  const selectedItems= useSelector((state) => state.selectedItems.selectedItems); // Get the selectedItems object from the Redux store, or an empty object if it doesn't exist
+  const { selectedItems, handleQuantityChange, handleDeleteItem } =
+    useContext(GroceryContext);
+
   const generatePDF = () => {
     const MyDocument = () => (
       <Document>
         <Page style={styles.page}>
           <View style={styles.section}>
             <Text style={styles.heading}>Selected Items</Text>
-            {selectedItems.map((item) => {
+            {selectedItems?.map((item) => {
               const teluguName = item.nameTelugu.split("(")[0].trim();
               return (
                 <View key={item.id} style={styles.item}>
@@ -75,7 +77,9 @@ const SelectedItems = () => {
       </PDFDownloadLink>
     );
   };
-
+  const handleDelete = (itemId) => {
+    handleDeleteItem(itemId);
+  };
   return (
     <div>
       <h2>Selected Items</h2>
@@ -87,10 +91,34 @@ const SelectedItems = () => {
           </tr>
         </thead>
         <tbody>
-          {selectedItems.map((item) => (
+          {selectedItems?.map((item) => (
             <tr key={item.id}>
               <td>{item.nameTelugu.split("(")[0].trim()}</td>
               <td>{item.quantity}</td>
+              <td>
+                {" "}
+                <div className="d-flex justify-content-center align-items-center gap-2">
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleQuantityChange(item.id, "-")}
+                  >
+                    -
+                  </button>
+                  <div className="bg-light p-2">{item.quantity} </div>
+                  <button
+                    className="btn btn-success"
+                    onClick={() => handleQuantityChange(item.id, "+")}
+                  >
+                    +
+                  </button>
+                  <div
+                    className="btn btn-danger"
+                    onClick={() => handleDelete(item.id)}
+                  >
+                    &#x2715;
+                  </div>
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>
