@@ -1,13 +1,10 @@
 import React, { createContext, useEffect, useState } from "react";
-
 export const GroceryContext = createContext();
-
 export const GroceryProvider = ({ children }) => {
   const storedSelectedItems = localStorage.getItem("selectedItems");
   const [selectedItems, setSelectedItems] = useState(
     storedSelectedItems ? JSON.parse(storedSelectedItems) : []
   );
-
   useEffect(() => {
     localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
   }, [selectedItems]);
